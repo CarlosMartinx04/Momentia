@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "397536172691",
+    "project_id": "momentia-b9cc6",
+    "storage_bucket": "momentia-b9cc6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397536172691:android:2f75188998cb57945d8b66",
+        "android_client_info": {
+          "package_name": "com.example.momentia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnMI3DaTvsHicXy6TU0DG0MwNPPbkxQco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
