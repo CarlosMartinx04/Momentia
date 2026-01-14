@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,9 +40,14 @@ import com.example.momentia.ui.theme.Negro
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SignUpScreen(auth: FirebaseAuth) {
+fun SignUpScreen(
+    auth: FirebaseAuth,
+    navigateToCreater: () -> Unit = {},
+    navigateBack: () -> Unit = {},
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,30 +57,14 @@ fun SignUpScreen(auth: FirebaseAuth) {
     ) {
         Row() {
             Icon(
+                modifier = Modifier.clickable() {
+                    navigateBack()
+                },
                 painter = painterResource(id = R.drawable.outline_arrow_back_24),
                 contentDescription = ""
             )
             Spacer(modifier = Modifier.weight(1f))
         }
-
-        Spacer(Modifier.height(50.dp))
-
-        Text("Nombre de usuario", color = Negro, fontWeight = FontWeight.Bold, fontSize = 30.sp)
-        TextField(
-            value = "email",
-            onValueChange = { email = it },
-            leadingIcon = { Icon(Icons.Filled.Favorite, contentDescription = "Localized description") },
-            trailingIcon = { Icon(imageVector = Icons.Default.Clear, contentDescription = "") },
-            modifier = Modifier.border(BorderStroke(width = 4.dp, color = GrisClaro), shape = RoundedCornerShape(20))
-                .fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = GrisClaro,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent),
-            placeholder = {
-                Text("Introduce tu Nombre de usuario")
-            }
-        )
 
         Spacer(Modifier.height(30.dp))
 
@@ -82,44 +72,68 @@ fun SignUpScreen(auth: FirebaseAuth) {
         TextField(
             value = email,
             onValueChange = { email = it },
-            leadingIcon = { Icon(Icons.Filled.Favorite, contentDescription = "Localized description") },
+            leadingIcon = {
+                Icon(
+                    Icons.Filled.Favorite,
+                    contentDescription = "Localized description"
+                )
+            },
             trailingIcon = { Icon(imageVector = Icons.Default.Clear, contentDescription = "") },
-            modifier = Modifier.border(BorderStroke(width = 4.dp, color = GrisClaro), shape = RoundedCornerShape(20))
+            modifier = Modifier
+                .border(
+                    BorderStroke(width = 4.dp, color = GrisClaro),
+                    shape = RoundedCornerShape(20)
+                )
                 .fillMaxWidth(),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = GrisClaro,
                 unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent),
+                disabledContainerColor = Color.Transparent
+            ),
             placeholder = {
-                Text("Introduce tu Correo")
+                Text("Escribe tu correo")
             }
         )
+
+
         Spacer(Modifier.height(30.dp))
         Text("Contraseña", color = Negro, fontWeight = FontWeight.Bold, fontSize = 30.sp)
 
         TextField(
             value = password,
             onValueChange = { password = it },
-            leadingIcon = { Icon(Icons.Filled.Favorite, contentDescription = "Localized description") },
+            leadingIcon = {
+                Icon(
+                    Icons.Filled.Favorite,
+                    contentDescription = "Localized description"
+                )
+            },
             trailingIcon = { Icon(imageVector = Icons.Default.Clear, contentDescription = "") },
-            modifier = Modifier.border(BorderStroke(width = 4.dp, color = GrisClaro), shape = RoundedCornerShape(20))
-                .fillMaxWidth(),colors = TextFieldDefaults.colors(
+            modifier = Modifier
+                .border(
+                    BorderStroke(width = 4.dp, color = GrisClaro),
+                    shape = RoundedCornerShape(20)
+                )
+                .fillMaxWidth(), colors = TextFieldDefaults.colors(
                 focusedContainerColor = GrisClaro,
                 unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent),
+                disabledContainerColor = Color.Transparent
+            ),
             placeholder = {
                 Text("Introduce tu contraseña")
             }
         )
         Spacer(Modifier.height(30.dp))
-        Button(onClick = {
+        Button(
+            onClick = {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if(task.isSuccessful){
+                if (task.isSuccessful) {
                     Log.i("Carlos", "Registro Ok")
                 } else {
                     Log.i("Carlos", "Registro Failed")
                 }
             }
+                navigateToCreater()
         }) {
             Text(text = "Registrarse")
         }

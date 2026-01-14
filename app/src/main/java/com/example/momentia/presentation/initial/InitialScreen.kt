@@ -55,7 +55,7 @@ fun InitialScreen( navigateToLogin:() -> Unit={}, navigateToSignUp:() -> Unit={}
         )
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            "Descubre lugares",
+            "Descubre lugare",
             color = Color.Black,
             fontSize = 38.sp,
             fontWeight = FontWeight.Bold
