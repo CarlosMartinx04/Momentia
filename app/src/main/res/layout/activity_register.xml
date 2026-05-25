@@ -14,11 +14,11 @@
         android:focusable="true"
         android:paddingBottom="8dp"
         android:src="@drawable/back"
-        android:textColor="@color/text_hint"
         android:textSize="14sp"
+        android:background="@null"
         app:backgroundTint="@null"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvTitle"

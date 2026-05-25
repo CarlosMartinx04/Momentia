@@ -5,4 +5,6 @@
     <string name="cloudinary_cloud_name">db02somfx</string>
     <string name="cloudinary_api_key">786262675958731</string>
     <string name="cloudinary_api_secret">bocAX6TTATx_NJVMYMhkNUEVtG8</string>
+    <string name="admob_native_ad_unit_id">ca-app-pub-3815843540440771/7918459980</string>
+
 </resources>

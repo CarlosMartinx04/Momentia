@@ -69,6 +69,9 @@ dependencies {
     //GoogleMaps
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    //AddMobs
+    implementation(libs.play.services.ads)
+
 
 
 }

@@ -180,7 +180,7 @@ class UploadPostActivity : AppCompatActivity() {
     private fun uploadImage(uri: Uri, onSuccess: (String) -> Unit) {
         val postId = db.collection("posts").document().id
         MediaManager.get().upload(uri)
-            .option("folder", "travelgram/posts").option("public_id", "post_$postId")
+            .option("folder", "momentia/posts").option("public_id", "post_$postId")
             .callback(object : UploadCallback {
                 override fun onStart(requestId: String) {}
                 override fun onProgress(requestId: String, bytes: Long, totalBytes: Long) {}

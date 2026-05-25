@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -18,11 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+
 
     private lateinit var adapter: PostAdapter
     private val postsList = mutableListOf<Post>()
@@ -31,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        MobileAds.initialize(this)
+
+        MobileAds.setRequestConfiguration(
+            com.google.android.gms.ads.RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("57F1F47C73A6883AD0CE960323F559B7"))
+                .build()
+        )
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -40,17 +50,25 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+
         if (auth.currentUser == null) {
             goToLogin(); return
         }
 
+        findViewById<ImageButton>(R.id.btnLogout).setOnClickListener {
+            auth.signOut()
+            goToLogin()
+        }
+
+
         val rvFeed = findViewById<RecyclerView>(R.id.rvFeed)
-        adapter = PostAdapter(postsList)
+        adapter = PostAdapter(postsList, this)
         rvFeed.layoutManager = LinearLayoutManager(this)
         rvFeed.adapter = adapter
 
         findViewById<ImageButton>(R.id.fabUpload).setOnClickListener {
             startActivity(Intent(this, UploadPostActivity::class.java))
+            overridePendingTransition(0, 0)
         }
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
@@ -59,7 +77,12 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_feed -> true
                 R.id.nav_notifications -> {
-                    startActivity(Intent(this, NotificationsActivity::class.java)); true
+                    startActivity(
+                        Intent(this, NotificationsActivity::class.java)
+                    )
+                    overridePendingTransition(0, 0)
+                    ; true
+
                 }
 
                 R.id.nav_profile -> {
@@ -70,6 +93,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         loadFeed()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.destroyAds()
     }
 
     override fun onResume() {
@@ -110,9 +138,12 @@ class MainActivity : AppCompatActivity() {
             }
 
     }
+
     private fun goToLogin() {
         startActivity(Intent(this, LoginActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         })
     }
+
+
 }

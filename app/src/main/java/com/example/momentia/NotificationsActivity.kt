@@ -25,12 +25,14 @@ class NotificationsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notifications)
 
         auth = FirebaseAuth.getInstance()
-        db   = FirebaseFirestore.getInstance()
-        if (auth.currentUser == null) { finish(); return }
+        db = FirebaseFirestore.getInstance()
+        if (auth.currentUser == null) {
+            finish(); return
+        }
 
         val rvNotifications = findViewById<RecyclerView>(R.id.rvNotifications)
-        val tvEmpty         = findViewById<TextView>(R.id.tvEmpty)
-        val tvMarkAllRead   = findViewById<TextView>(R.id.tvMarkAllRead)
+        val tvEmpty = findViewById<TextView>(R.id.tvEmpty)
+        val tvMarkAllRead = findViewById<TextView>(R.id.tvMarkAllRead)
 
         adapter = NotificationAdapter(notifList)
         rvNotifications.layoutManager = LinearLayoutManager(this)
@@ -42,9 +44,24 @@ class NotificationsActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.nav_notifications
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_feed -> { startActivity(Intent(this, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP }); true }
+                R.id.nav_feed -> {
+                    startActivity(Intent(this, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    })
+                    overridePendingTransition(0, 0)
+                    ; true
+
+                }
+
                 R.id.nav_notifications -> true
-                R.id.nav_profile -> { startActivity(Intent(this, ProfileActivity::class.java)); true }
+                R.id.nav_profile -> {
+                    startActivity(
+                        Intent(this, ProfileActivity::class.java)
+                    )
+                    overridePendingTransition(0, 0)
+                    ; true
+                }
+
                 else -> false
             }
         }
@@ -56,19 +73,31 @@ class NotificationsActivity : AppCompatActivity() {
             .addOnSuccessListener { documents ->
                 notifList.clear()
                 for (doc in documents) {
-                    notifList.add(Notification(
-                        id = doc.id, fromName = doc.getString("fromName") ?: "",
-                        type = doc.getString("type") ?: "", postId = doc.getString("postId") ?: "",
-                        postImage = doc.getString("postImage") ?: "", message = doc.getString("message") ?: "",
-                        read = doc.getBoolean("read") ?: false, createdAt = doc.getLong("createdAt") ?: 0L
-                    ))
+                    notifList.add(
+                        Notification(
+                            id = doc.id,
+                            fromName = doc.getString("fromName") ?: "",
+                            type = doc.getString("type") ?: "",
+                            postId = doc.getString("postId") ?: "",
+                            postImage = doc.getString("postImage") ?: "",
+                            message = doc.getString("message") ?: "",
+                            read = doc.getBoolean("read") ?: false,
+                            createdAt = doc.getLong("createdAt") ?: 0L
+                        )
+                    )
                 }
                 adapter.notifyDataSetChanged()
-                tvEmpty.visibility         = if (notifList.isEmpty()) View.VISIBLE else View.GONE
+                tvEmpty.visibility = if (notifList.isEmpty()) View.VISIBLE else View.GONE
                 rvNotifications.visibility = if (notifList.isEmpty()) View.GONE else View.VISIBLE
                 markAllAsRead()
             }
-            .addOnFailureListener { Toast.makeText(this, "Error al cargar notificaciones", Toast.LENGTH_SHORT).show() }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "Error al cargar notificaciones",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
     private fun markAllAsRead() {
@@ -79,7 +108,9 @@ class NotificationsActivity : AppCompatActivity() {
                 val batch = db.batch()
                 documents.forEach { batch.update(it.reference, "read", true) }
                 batch.commit().addOnSuccessListener {
-                    notifList.forEachIndexed { i, n -> if (!n.read) notifList[i] = n.copy(read = true) }
+                    notifList.forEachIndexed { i, n ->
+                        if (!n.read) notifList[i] = n.copy(read = true)
+                    }
                     adapter.notifyDataSetChanged()
                 }
             }
