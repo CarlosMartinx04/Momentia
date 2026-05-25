@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50529388485",
+    "project_id": "momentia-820bc",
+    "storage_bucket": "momentia-820bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50529388485:android:5922e23a87a17743fb6dac",
+        "android_client_info": {
+          "package_name": "com.example.momentia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50529388485-giuup9oi58egl9rj6hvffoshvp4fb284.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.momentia",
+            "certificate_hash": "24652d72d6b288dbb08479b861072d3a200362b1"
+          }
+        },
+        {
+          "client_id": "50529388485-7lg806sb1ge5p0jmn0antjcd80v3lndu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAN-BCP9QhFt9QcXU9-JwLjTX-W03_1zTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50529388485-7lg806sb1ge5p0jmn0antjcd80v3lndu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

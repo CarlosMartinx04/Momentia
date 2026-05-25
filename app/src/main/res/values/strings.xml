@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Momentia</string>
+    <string name="web_client_id">50529388485-7lg806sb1ge5p0jmn0antjcd80v3lndu.apps.googleusercontent.com</string>
+    <string name="google_maps_key">AIzaSyAH3opp5ECNJjSLOrobAO9mAgrwZS9U4cQ</string>
+    <string name="cloudinary_cloud_name">db02somfx</string>
+    <string name="cloudinary_api_key">786262675958731</string>
+    <string name="cloudinary_api_secret">bocAX6TTATx_NJVMYMhkNUEVtG8</string>
+</resources>

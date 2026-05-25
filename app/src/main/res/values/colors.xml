@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#FFFFFF</color>
+    <color name="primary_light">#16213E</color>
+    <color name="blue">#0066CC</color>
+    <color name="blue_light">#1E90FF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="input_bg">#F6F6F6</color>
+    <color name="input_border">#CECECE</color>
+    <color name="text_hint">#7A7A7A</color>
+    <color name="heart">#FF0000</color>
+</resources>
